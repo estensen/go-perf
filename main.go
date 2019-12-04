@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	_ "net/http/pprof"
 	"strconv"
 )
 
@@ -13,6 +14,8 @@ func main() {
 }
 
 func leftpadHandler() {
+	// TODO: Do something mega-slow that will dominate CPU time
+
 	http.HandleFunc("/leftpad", func(w http.ResponseWriter, r *http.Request) {
 		log.Print("Incoming request: ", r.RequestURI)
 
@@ -29,9 +32,9 @@ func leftpadHandler() {
 			return
 		}
 
-		padding := r.FormValue("padding")
+		padding := r.FormValue("length")
 		if padding == "" {
-			log.Println("no padding")
+			log.Println("no length")
 			http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
 			return
 		}
@@ -47,12 +50,13 @@ func leftpadHandler() {
 	})
 }
 
-func leftpad(str string,padding string) (string, error) {
-	numPadding, err := strconv.Atoi(padding)
+func leftpad(str string, length string) (string, error) {
+	l, err := strconv.Atoi(length)
 	if err != nil {
 		return "", err
 	}
-	for i := 0; i < numPadding; i++ {
+
+	for len(str) < l {
 		str = " " + str
 	}
 	return str, nil
