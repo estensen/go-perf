@@ -1,4 +1,4 @@
-package profiling
+package main
 
 import (
 	"encoding/json"
@@ -10,6 +10,7 @@ import (
 
 func main() {
 	leftpadHandler()
+	log.Println("Server running on port 8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
