@@ -15,18 +15,21 @@ func BenchmarkConcatString(b *testing.B) {
 	}
 
 	b.Run("concat string", func(b *testing.B) {
+		b.ReportAllocs()
 		for i := 0; i < b.N; i++ {
 			ConcatString(words)
 		}
 	})
 
 	b.Run("concat buffer", func(b *testing.B) {
+		b.ReportAllocs()
 		for i := 0; i < b.N; i++ {
 			ConcatBuffer(words)
 		}
 	})
 
 	b.Run("concat builder", func(b *testing.B) {
+		b.ReportAllocs()
 		for i := 0; i < b.N; i++ {
 			ConcatBuilder(words)
 		}
