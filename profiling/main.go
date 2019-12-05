@@ -15,8 +15,6 @@ func main() {
 }
 
 func leftpadHandler() {
-	// TODO: Do something mega-slow that will dominate CPU time
-
 	http.HandleFunc("/leftpad", func(w http.ResponseWriter, r *http.Request) {
 		log.Print("Incoming request: ", r.RequestURI)
 
@@ -61,6 +59,20 @@ func leftpad(str string, length string) (string, error) {
 		str = " " + str
 	}
 	return str, nil
+
+	/*
+		// Better way of building a large string because it's not allocating n log n memory for 'str'
+		// But is probably not better for only concatenating two short strings, so always run a realistic test-case
+
+		var builder strings.Builder
+
+		for i := 0; i < l - len(str); i++ {
+			builder.WriteString(" ")
+		}
+		builder.WriteString(str)
+
+		return builder.String(), nil
+	*/
 }
 
 func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
