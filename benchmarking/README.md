@@ -3,7 +3,7 @@
 ## Run Benchmarks Once
 ```
 # Run all benchmarks
-$ go test -benchmarks=.
+$ go test -bench=.
 ```
 
 ## Run Benchmarks Multiple Times
